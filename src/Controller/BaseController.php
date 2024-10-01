@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Form\AjoutBonbonType;
 use Symfony\Component\HttpFoundation\Request;
+use App\Repository\TypeBonbonRepository;
 
 class BaseController extends AbstractController
 {
@@ -32,6 +33,15 @@ class BaseController extends AbstractController
 
         return $this->render('base/ajoutBonbon.html.twig', [
             'form' => $form->createView()
+        ]);
+    }
+
+    #[Route('/liste-typebonbon', name: 'app_liste-typebonbon')]
+    public function listeTypeBonbon(TypeBonbonRepository $typeBonbonRepository): Response
+    {
+        $bonbons = $typeBonbonRepository->findAll();
+        return $this->render('base/liste-typebonbon.html.twig', [
+            'bonbons' => $bonbons
         ]);
     }
 }
